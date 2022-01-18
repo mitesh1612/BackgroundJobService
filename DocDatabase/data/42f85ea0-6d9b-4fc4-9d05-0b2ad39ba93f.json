@@ -1,0 +1,8 @@
+{
+  "JobId": "42f85ea0-6d9b-4fc4-9d05-0b2ad39ba93f",
+  "JobCallbackName": "SimpleLoggerJob",
+  "JobMetadata": {
+    "SecretString": "melodie-vivia-joleen"
+  },
+  "JobQueueTime": "2022-01-18T20:03:44.9985225+05:30"
+}

@@ -1,0 +1,8 @@
+{
+  "JobId": "42422999-8d15-4936-9ddf-bc10145fec89",
+  "JobCallbackName": "SimpleLoggerJob",
+  "JobMetadata": {
+    "SecretString": "briney-vivia-fernande"
+  },
+  "JobQueueTime": "2022-01-18T20:03:21.0137531+05:30"
+}

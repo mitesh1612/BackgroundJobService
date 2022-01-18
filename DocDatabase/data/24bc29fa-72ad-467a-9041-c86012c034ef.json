@@ -1,0 +1,8 @@
+{
+  "JobId": "24bc29fa-72ad-467a-9041-c86012c034ef",
+  "JobCallbackName": "SimpleLoggerJob",
+  "JobMetadata": {
+    "SecretString": "lorenza-kenna-joleen"
+  },
+  "JobQueueTime": "2022-01-18T20:29:39.8469292+05:30"
+}

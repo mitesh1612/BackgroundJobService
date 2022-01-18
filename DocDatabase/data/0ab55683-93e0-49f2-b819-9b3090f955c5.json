@@ -1,0 +1,8 @@
+{
+  "JobId": "0ab55683-93e0-49f2-b819-9b3090f955c5",
+  "JobCallbackName": "SimpleLoggerJob",
+  "JobMetadata": {
+    "SecretString": "briney-roberta-clementine"
+  },
+  "JobQueueTime": "2022-01-18T20:29:31.8429389+05:30"
+}

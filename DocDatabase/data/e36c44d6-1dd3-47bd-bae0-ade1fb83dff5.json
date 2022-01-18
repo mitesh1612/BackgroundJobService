@@ -1,0 +1,8 @@
+{
+  "JobId": "e36c44d6-1dd3-47bd-bae0-ade1fb83dff5",
+  "JobCallbackName": "SimpleLoggerJob",
+  "JobMetadata": {
+    "SecretString": "helena-roberta-fernande"
+  },
+  "JobQueueTime": "2022-01-18T20:26:44.7315562+05:30"
+}
