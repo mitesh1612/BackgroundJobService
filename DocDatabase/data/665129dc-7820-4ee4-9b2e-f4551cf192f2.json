@@ -1,8 +1,0 @@
-{
-  "JobId": "665129dc-7820-4ee4-9b2e-f4551cf192f2",
-  "JobCallbackName": "SimpleLoggerJob",
-  "JobMetadata": {
-    "SecretString": "helena-roberta-darci"
-  },
-  "JobQueueTime": "2022-01-18T20:29:37.1966721+05:30"
-}

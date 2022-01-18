@@ -1,8 +1,0 @@
-{
-  "JobId": "b737ed21-d277-445d-98a3-24f9443a7c28",
-  "JobCallbackName": "SimpleLoggerJob",
-  "JobMetadata": {
-    "SecretString": "helena-elfreda-yetty"
-  },
-  "JobQueueTime": "2022-01-18T20:29:29.6414291+05:30"
-}

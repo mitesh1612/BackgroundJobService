@@ -1,8 +1,0 @@
-{
-  "JobId": "0b681570-3815-4de2-9558-6a2b021653db",
-  "JobCallbackName": "SimpleLoggerJob",
-  "JobMetadata": {
-    "SecretString": "lorenza-kenna-darci"
-  },
-  "JobQueueTime": "2022-01-18T20:20:11.6231018+05:30"
-}

@@ -1,8 +1,0 @@
-{
-  "JobId": "a05deeda-9844-48d1-967c-859a1bee247e",
-  "JobCallbackName": "SimpleLoggerJob",
-  "JobMetadata": {
-    "SecretString": "lorenza-kenna-clementine"
-  },
-  "JobQueueTime": "2022-01-18T20:31:58.4844039+05:30"
-}

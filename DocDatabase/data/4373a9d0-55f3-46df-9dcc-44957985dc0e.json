@@ -1,8 +1,0 @@
-{
-  "JobId": "4373a9d0-55f3-46df-9dcc-44957985dc0e",
-  "JobCallbackName": "SimpleLoggerJob",
-  "JobMetadata": {
-    "SecretString": "melodie-kenna-yetty"
-  },
-  "JobQueueTime": "2022-01-18T20:31:56.4560822+05:30"
-}

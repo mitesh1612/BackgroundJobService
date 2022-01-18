@@ -1,8 +1,0 @@
-{
-  "JobId": "a7561f1a-0c66-4953-b6ab-68fcc5c6b5eb",
-  "JobCallbackName": "SimpleLoggerJob",
-  "JobMetadata": {
-    "SecretString": "briney-roberta-darci"
-  },
-  "JobQueueTime": "2022-01-18T20:30:59.9369079+05:30"
-}

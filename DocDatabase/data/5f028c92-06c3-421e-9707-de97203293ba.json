@@ -1,8 +1,0 @@
-{
-  "JobId": "5f028c92-06c3-421e-9707-de97203293ba",
-  "JobCallbackName": "SimpleLoggerJob",
-  "JobMetadata": {
-    "SecretString": "lorenza-kenna-fernande"
-  },
-  "JobQueueTime": "2022-01-18T20:30:57.8976984+05:30"
-}

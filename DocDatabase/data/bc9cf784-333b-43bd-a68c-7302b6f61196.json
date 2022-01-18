@@ -1,8 +1,0 @@
-{
-  "JobId": "bc9cf784-333b-43bd-a68c-7302b6f61196",
-  "JobCallbackName": "SimpleLoggerJob",
-  "JobMetadata": {
-    "SecretString": "helena-elfreda-fernande"
-  },
-  "JobQueueTime": "2022-01-18T20:07:23.8820528+05:30"
-}
