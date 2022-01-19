@@ -39,6 +39,9 @@ bld/
 # Visual Studio 2017 auto generated files
 Generated\ Files/
 
+# Generated Test File system Database
+[Dd]ocDatabase/
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*

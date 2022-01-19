@@ -11,12 +11,10 @@ namespace BackgroundJobService.SampleJobs
     [JobCallbackName(nameof(SimpleLoggerJob))]
     public class SimpleLoggerJob : BaseJobCallback<SimpleLoggerJobMetadata>
     {
-        public SimpleLoggerJob()
-        { }
-
-        public SimpleLoggerJob(SimpleLoggerJobMetadata metadata)
-            : base(metadata)
-        { }
+        // This should not be required. Find another way to call the base class constructor and initialize metadata
+        // and remove duplication
+        public SimpleLoggerJob(string serializedJobMetadata) : base(serializedJobMetadata)
+            { }
 
         public override JobExecutionResult Execute()
         {

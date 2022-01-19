@@ -51,10 +51,11 @@ namespace BackgroundJobService.Services
                     await Task.CompletedTask;
                 }
 
-                var jobMetadata = JsonConvert.DeserializeObject<JobMetadata>(jobDef.JobMetadata.ToString());
-                // TODO: Passing job metadata doesnt work. Fix this
-                var jobInstance = (IJobCallback) Activator.CreateInstance(jobType);
+                var serializedJobMetadata = jobDef.JobMetadata.ToString();
+                var jobTypeCtor = jobType.GetConstructor(new Type[1] { typeof(string) });
+                var jobInstance = (IJobCallback) jobTypeCtor.Invoke(new object[1] { serializedJobMetadata });
                 await Task.Run(jobInstance.Execute);
+
                 _jobDefStore.DeleteDocument(jobId);
             }
 
