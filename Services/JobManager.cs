@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BackgroundJobService.Services
 {
+    /// <summary>
+    /// Base implementation of the job manager.
+    /// </summary>
     public class JobManager : IJobManager
     {
         private readonly IDocumentDataProvider _jobDefinitionStore;

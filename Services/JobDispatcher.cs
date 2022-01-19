@@ -5,7 +5,10 @@ using System.Reflection;
 
 namespace BackgroundJobService.Services
 {
-    // Long Running service that pick jobs from the queue and runs them.
+    /// <summary>
+    /// Job Dispatcher service that reads from the queue and runs the jobs.
+    /// Modeled as a BackgroundService to run as a hosted service.
+    /// </summary>
     public class JobDispatcher : BackgroundService
     {
         private readonly IDocumentDataProvider _jobDefStore;
@@ -26,11 +29,11 @@ namespace BackgroundJobService.Services
             while(!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(1000);
-                await RunJobs();
+                await RunJobFromQueue();
             }
         }
 
-        private async Task RunJobs()
+        private async Task RunJobFromQueue()
         {
             var jobId = _jobQueueProvider.ReadFromQueue();
 
@@ -52,10 +55,7 @@ namespace BackgroundJobService.Services
                 }
 
                 var serializedJobMetadata = jobDef.JobMetadata.ToString();
-                var nonIntializedInstance = Activator.CreateInstance(jobType);
-                var initializeMethod = nonIntializedInstance.GetType().GetMethod("InitializeWithMetadata", BindingFlags.NonPublic | BindingFlags.Instance);
-                _ = initializeMethod.Invoke(nonIntializedInstance, new object[] { serializedJobMetadata });
-                var jobInstance = nonIntializedInstance as IJobCallback;
+                var jobInstance = this.CreateJobCallbackInstanceFromType(jobType, serializedJobMetadata);
                 await Task.Run(jobInstance.Execute);
 
                 _jobDefStore.DeleteDocument(jobId);
@@ -89,6 +89,15 @@ namespace BackgroundJobService.Services
             }
 
             return null;
+        }
+
+        private IJobCallback CreateJobCallbackInstanceFromType(Type jobType, string serializedJobMetadata)
+        {
+            var nonIntializedInstance = Activator.CreateInstance(jobType);
+            var initializeMethod = nonIntializedInstance.GetType().GetMethod("InitializeWithMetadata", BindingFlags.NonPublic | BindingFlags.Instance);
+            _ = initializeMethod.Invoke(nonIntializedInstance, new object[] { serializedJobMetadata });
+            var jobInstance = nonIntializedInstance as IJobCallback;
+            return jobInstance;
         }
     }
 }

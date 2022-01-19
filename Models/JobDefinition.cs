@@ -2,6 +2,9 @@
 
 namespace BackgroundJobService.Models
 {
+    /// <summary>
+    /// Job definition object that gets stored in the job definition store.
+    /// </summary>
     public class JobDefinition
     {
         public string JobId { get; set; }

@@ -8,7 +8,7 @@ namespace BackgroundJobService.SampleJobs
     {
         public override JobExecutionResult Execute()
         {
-            Console.WriteLine($"Secret String: {this._jobMetadata?.SecretString}");
+            Console.WriteLine($"Secret String: {this.JobMetadata?.SecretString}");
             return new JobExecutionResult { Message = "Done.", Status = JobExecutionStatus.Completed };
         }
     }

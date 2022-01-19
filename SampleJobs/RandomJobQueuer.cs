@@ -19,7 +19,7 @@ namespace BackgroundJobService.SampleJobs
         {
             while(!stoppingToken.IsCancellationRequested)
             {
-                await QueueJobs();
+                await QueueJob();
                 await Task.Delay(1000);
                 currentCount++;
                 if (currentCount > maxCount)
@@ -27,7 +27,7 @@ namespace BackgroundJobService.SampleJobs
             }
         }
 
-        private async Task QueueJobs()
+        private async Task QueueJob()
         {
             var secretString = GetRandomString();
             var jobMetadata = new SimpleLoggerJobMetadata()
