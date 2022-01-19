@@ -58,7 +58,7 @@ namespace BackgroundJobService.Services
                 var jobInstance = this.CreateJobCallbackInstanceFromType(jobType, serializedJobMetadata);
                 await Task.Run(jobInstance.Execute);
 
-                _jobDefStore.DeleteDocument(jobId);
+                // Optionally can run _jobDefStore.DeleteDocument(jobId) to clean the job definition.
             }
 
             await Task.CompletedTask;
