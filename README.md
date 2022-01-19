@@ -4,7 +4,6 @@ A PoC of implementing a basic BackgroundJobService from Scratch. The code doesnt
 
 ## Future/Pending Work
 
-1. Fix Job Metadata Passing. Right now requires all new job callbacks to implement a certain constructor. Needs to be fixed.
-2. Allow jobs to consume any injected service in the service collection.
-3. Add more features like scheduling jobs.
-4. More documentation in the code and on how to consume the code as well.
+1. Allow jobs to consume any injected service in the service collection.
+2. Add more features like scheduling jobs.
+3. More documentation in the code and on how to consume the code as well. Add ADR and some design info.

@@ -41,19 +41,21 @@ namespace BackgroundJobService.Services
                 if (jobDef == null)
                 {
                     Console.WriteLine($"Couldn't find job definition for Job Id: {jobId}");
-                    await Task.CompletedTask;
+                    return;
                 }
 
                 var jobType = FindJobAssemblyForCallbackName(jobDef.JobCallbackName);
                 if (jobType == null)
                 {
                     Console.WriteLine($"Couldn't find job assembly for job id {jobId} and callback name {jobDef.JobCallbackName}.");
-                    await Task.CompletedTask;
+                    return;
                 }
 
                 var serializedJobMetadata = jobDef.JobMetadata.ToString();
-                var jobTypeCtor = jobType.GetConstructor(new Type[1] { typeof(string) });
-                var jobInstance = (IJobCallback) jobTypeCtor.Invoke(new object[1] { serializedJobMetadata });
+                var nonIntializedInstance = Activator.CreateInstance(jobType);
+                var initializeMethod = nonIntializedInstance.GetType().GetMethod("InitializeWithMetadata", BindingFlags.NonPublic | BindingFlags.Instance);
+                _ = initializeMethod.Invoke(nonIntializedInstance, new object[] { serializedJobMetadata });
+                var jobInstance = nonIntializedInstance as IJobCallback;
                 await Task.Run(jobInstance.Execute);
 
                 _jobDefStore.DeleteDocument(jobId);
