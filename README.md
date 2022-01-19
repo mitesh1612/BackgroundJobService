@@ -40,14 +40,14 @@ public NewJobCallback : BaseJobCallback<NewJobMetadata>
 
 Can also refer to the `SimpleLoggerJob` provided.
 
-## Queuing jobs using Job Manager
+### Queuing jobs using Job Manager
 
 Use the `JobManager` class methods to queue jobs. It requires a `IDocumentDataProvider` and `IQueueProvider`.
 Use the same name provided to your job callback using the `JobCallbackName` attribute while queuing the job and pass appropriate metadata.
 
 Note these providers should write to the same queue and document store that the worker is going to read from.
 
-## Running the Background Job Service as a worker service
+### Running the Background Job Service as a worker service
 
 To run the background job service as a worker service, do the following:
 
