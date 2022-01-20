@@ -6,13 +6,15 @@ namespace BackgroundJobService.SampleJobs
 {
     public class RandomJobQueuer : BackgroundService
     {
+        private readonly ILogger<RandomJobQueuer> _logger;
         private readonly IJobManager _jobManager;
         private int currentCount = 0;
         private int maxCount = 5;
 
-        public RandomJobQueuer(IJobManager jobManager)
+        public RandomJobQueuer(IJobManager jobManager, ILogger<RandomJobQueuer> logger)
         {
             _jobManager = jobManager;
+            _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -35,7 +37,7 @@ namespace BackgroundJobService.SampleJobs
                 SecretString = secretString,
             };
 
-            Console.WriteLine($"Queueing Job with Secret String: {secretString}");
+            _logger.LogInformation($"Queueing Job with Secret String: {secretString}");
 
             _jobManager.QueueJob(nameof(SimpleLoggerJob), JObject.FromObject(jobMetadata));
             await Task.CompletedTask;
@@ -47,7 +49,12 @@ namespace BackgroundJobService.SampleJobs
             "Helena",
             "Harrietta",
             "Lorenza",
-            "Briney"
+            "Briney",
+            "Dorthy",
+            "Shannah",
+            "Heida",
+            "Joane",
+            "Noelle"
         };
 
         public static List<string> WordsPart2 = new List<string>
@@ -56,7 +63,12 @@ namespace BackgroundJobService.SampleJobs
             "Ekaterina",
             "Roberta",
             "Vivia",
-            "Elfreda"
+            "Elfreda",
+            "Leeanne",
+            "Kayla",
+            "Chandra",
+            "Violet",
+            "Hayley"
         };
 
         public static List<string> WordsPart3 = new List<string>
@@ -65,7 +77,12 @@ namespace BackgroundJobService.SampleJobs
             "Clementine",
             "Yetty",
             "Fernande",
-            "Joleen"
+            "Joleen",
+            "Melina",
+            "Paule",
+            "Tracey",
+            "Merry",
+            "Steffane"
         };
 
         public static string GetRandomString()
