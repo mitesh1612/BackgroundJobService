@@ -12,13 +12,13 @@
             this.CreateDirectoryIfNotExists();
         }
 
-        public void WriteToFile(string fileName, string fileContent, bool throwIfExists = false)
+        public void WriteToFile(string fileName, string fileContent, bool throwIfNotExists = false)
         {
             var filePath = this.GetFilePathWithExtension(fileName);
             var fileExists = File.Exists(filePath);
-            if (fileExists && throwIfExists)
+            if (!fileExists && throwIfNotExists)
             {
-                throw new InvalidOperationException($"File {filePath} already exists.");
+                throw new InvalidOperationException($"File {filePath} doesn't already exist.");
             }
 
             File.WriteAllText(filePath, fileContent);

@@ -1,6 +1,7 @@
 ﻿using BackgroundJobService.DataProviders.Interfaces;
 using BackgroundJobService.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Reflection;
 
 namespace BackgroundJobService.Services
@@ -11,16 +12,19 @@ namespace BackgroundJobService.Services
     /// </summary>
     public class JobDispatcher : BackgroundService
     {
+        private readonly ILogger<JobDispatcher> _logger;
+
         private readonly IDocumentDataProvider _jobDefStore;
 
         private readonly IQueueProvider _jobQueueProvider;
 
         private List<Type> _jobTypes;
 
-        public JobDispatcher(IDocumentDataProvider defStore, IQueueProvider queueProvider)
+        public JobDispatcher(IDocumentDataProvider defStore, IQueueProvider queueProvider, ILogger<JobDispatcher> logger)
         {
             _jobDefStore = defStore;
             _jobQueueProvider = queueProvider;
+            _logger = logger;
             InitializeJobTypes();
         }
 
@@ -43,25 +47,43 @@ namespace BackgroundJobService.Services
                 var jobDef = JsonConvert.DeserializeObject<JobDefinition>(serializedJobDef.ToString());
                 if (jobDef == null)
                 {
-                    Console.WriteLine($"Couldn't find job definition for Job Id: {jobId}");
+                    _logger.LogError($"Couldn't find job definition for Job Id: {jobId}");
                     return;
                 }
 
                 var jobType = FindJobAssemblyForCallbackName(jobDef.JobCallbackName);
                 if (jobType == null)
                 {
-                    Console.WriteLine($"Couldn't find job assembly for job id {jobId} and callback name {jobDef.JobCallbackName}.");
+                    _logger.LogError($"Couldn't find job assembly for job id {jobId} and callback name {jobDef.JobCallbackName}.");
                     return;
                 }
 
                 var serializedJobMetadata = jobDef.JobMetadata.ToString();
                 var jobInstance = this.CreateJobCallbackInstanceFromType(jobType, serializedJobMetadata);
-                await Task.Run(jobInstance.Execute);
-
-                // Optionally can run _jobDefStore.DeleteDocument(jobId) to clean the job definition.
+                _logger.LogInformation($"Running job with job id: {jobDef.JobId} with Callback: {jobDef.JobCallbackName}");
+                try
+                {
+                    this.UpdateJobDefinitionStatus(jobDef, JobStatus.InProgress);
+                    await Task.Run(jobInstance.Execute);
+                    this.UpdateJobDefinitionStatus(jobDef, JobStatus.Completed);
+                }
+                catch (Exception ex)
+                {
+                    this.UpdateJobDefinitionStatus(jobDef, JobStatus.Failed);
+                    _logger.LogError($"Job Execution Failed for Job Id: {jobId} with the following exception: {ex.ToString()}");
+                }
             }
 
             await Task.CompletedTask;
+        }
+
+        private void UpdateJobDefinitionStatus(JobDefinition jobDefinition, JobStatus newStatus)
+        {
+            if (jobDefinition != null)
+            {
+                jobDefinition.JobStatus = newStatus;
+                this._jobDefStore.ReplaceDocument(JObject.FromObject(jobDefinition), jobDefinition.JobId);
+            }
         }
 
         private void InitializeJobTypes()

@@ -27,5 +27,15 @@ namespace BackgroundJobService.DataProviders.Interfaces
         /// <param name="id">Document Id.</param>
         /// <returns>The document that was deleted.</returns>
         public JObject DeleteDocument(string id);
+
+        /// <summary>
+        /// Replace a document with given it with a provided document.
+        /// Throws an error if the given id doesnt exist in the database.
+        /// </summary>
+        /// <param name="document">New document.</param>
+        /// <param name="documentId">Existing Document Id.</param>
+        /// <returns></returns>
+        public JObject ReplaceDocument(JObject document, string documentId);
+
     }
 }

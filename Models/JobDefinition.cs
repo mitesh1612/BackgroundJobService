@@ -15,6 +15,8 @@ namespace BackgroundJobService.Models
 
         public DateTime JobQueueTime { get; set; }
 
+        public JobStatus JobStatus { get; set; }
+
         public JobDefinition()
         { }
 
@@ -24,6 +26,15 @@ namespace BackgroundJobService.Models
             JobCallbackName = jobCallbackName;
             JobMetadata = jobMetadata;
             JobQueueTime = queueTime;
+            JobStatus = JobStatus.Queued;
         }
+    }
+
+    public enum JobStatus
+    {
+        Queued,
+        InProgress,
+        Completed,
+        Failed
     }
 }

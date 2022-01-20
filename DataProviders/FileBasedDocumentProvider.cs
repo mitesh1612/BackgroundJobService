@@ -23,6 +23,12 @@ namespace BackgroundJobService.DataProviders
             _fileUtils.WriteToFile(documentId, document.ToString());
         }
 
+        public JObject ReplaceDocument(JObject document, string documentId)
+        {
+            _fileUtils.WriteToFile(documentId, document.ToString(), throwIfNotExists: true);
+            return document;
+        }
+
         public JObject DeleteDocument(string id)
         {
             var fileContent = this.GetDocumentById(id);
@@ -32,7 +38,7 @@ namespace BackgroundJobService.DataProviders
 
         public JObject GetDocumentById(string id)
         {
-            var readData = _fileUtils.ReadFile(id);
+            var readData = _fileUtils.ReadFile(id, throwIfNotExists: true);
             return JObject.Parse(readData);
         }
     }
