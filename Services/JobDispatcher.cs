@@ -64,8 +64,7 @@ namespace BackgroundJobService.Services
                 try
                 {
                     this.UpdateJobDefinitionStatus(jobDef, JobStatus.InProgress);
-                    await Task.Run(jobInstance.Execute);
-                    this.UpdateJobDefinitionStatus(jobDef, JobStatus.Completed);
+                    Task.Run(() => this.RunJobAndUpdateDefinition(jobDef, jobInstance));
                 }
                 catch (Exception ex)
                 {
@@ -75,6 +74,23 @@ namespace BackgroundJobService.Services
             }
 
             await Task.CompletedTask;
+        }
+
+        private async Task RunJobAndUpdateDefinition(JobDefinition jobDefinition, IJobCallback jobInstance)
+        {
+            var executionResult = await Task.Run(jobInstance.Execute);
+            switch (executionResult?.Status)
+            {
+                case JobExecutionStatus.Completed:
+                    this.UpdateJobDefinitionStatus(jobDefinition, JobStatus.Completed);
+                    break;
+                case JobExecutionStatus.Failed:
+                    this.UpdateJobDefinitionStatus(jobDefinition, JobStatus.Failed);
+                    break;
+                default:
+                    this.UpdateJobDefinitionStatus(jobDefinition, JobStatus.Failed);
+                    break;
+            }
         }
 
         private void UpdateJobDefinitionStatus(JobDefinition jobDefinition, JobStatus newStatus)

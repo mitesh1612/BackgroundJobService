@@ -67,3 +67,4 @@ Hopefully your worker service starts. After that use the job manager to queue jo
 5. Build adapters for common document databases and common queue services
 6. Use subscribe to queue mechanisms for job dispatcher if possible, instead of polling the queue constantly.
 7. Modify the project type to publish it as an SDK and add Actions workflows for CI/CD.
+8. Add tests if possible
